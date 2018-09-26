@@ -1,0 +1,27 @@
+{
+  "name": "@multiplatform/rx",
+  "version": "2.3.0-0",
+  "description": "Wrapper around rxJS for usage in Kotlin Multiplatform projects",
+  "main": "out/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/multiplatform-io/repository.git"
+  },
+  "keywords": [
+    "kotlin",
+    "mutliplatform",
+    "kotlin-js",
+    "rx",
+    "rxJS",
+    "rxKotlin"
+  ],
+  "author": "multiplatform.io",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/multiplatform-io/repository/labels/rx"
+  },
+  "homepage": "https://github.com/multiplatform-io/repository#rx/readme"
+}
