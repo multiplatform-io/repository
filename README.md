@@ -1,2 +1,2 @@
-# repository
-The repository for Kotlin Multiplatform library wrappers
+# rx
+ReactiveX Kotlin Multiplatform library wrapper
