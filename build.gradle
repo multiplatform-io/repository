@@ -34,8 +34,7 @@ kotlin {
                 sourceMap = true
                 sourceMapEmbedSources = "always"
                 moduleKind = "commonjs"
-                outputFile = "out/index.js"
-            }        
+            }
         }
     }
     sourceSets {
@@ -64,3 +63,19 @@ dependencies {
 
 }
 
+task copyPackageJson(type: Copy) {
+    from file("package.json")
+    into file("${buildDir}/node_module")
+}
+
+task copyJS(type: Copy) {
+    from file("${buildDir}/classes/kotlin/js/main/${project.name}.js")
+    into file("${buildDir}/node_module")
+    rename "${project.name}\\.js", 'index.js'
+}
+
+task publishToNpm(type:Exec, dependsOn: [copyPackageJson, copyJS]) {
+    workingDir "${buildDir}/node_module"
+    executable 'npm'
+    args ['publish']
+}
