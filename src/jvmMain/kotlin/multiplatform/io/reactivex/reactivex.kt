@@ -2,8 +2,13 @@
 
 package multiplatform.io.reactivex
 
+import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.withLatestFrom
+
+actual typealias Emitter<T> = io.reactivex.Emitter<T>
+
+actual typealias ObservableEmitter<T> = io.reactivex.ObservableEmitter<T>
 
 actual typealias ObservableSource<T> = io.reactivex.ObservableSource<T>
 
@@ -16,7 +21,6 @@ actual typealias GroupedObservable<K, T> = io.reactivex.observables.GroupedObser
 actual inline fun <T> Observable<T>.filter(noinline predicate: (T) -> Boolean): Observable<T> = filter(predicate)
 
 actual inline fun <T> Observable<T>.subscribe(noinline onNext: (T) -> Unit): Disposable = subscribe(onNext)
-
 
 actual inline fun <T, K> Observable<T>.groupBy(noinline keySelector: (T) -> K): Observable<GroupedObservable<K, T>> = groupBy(keySelector)
 
@@ -33,3 +37,10 @@ actual inline fun <T, U> Observable<T>.flatMapIterable(noinline mapper: (t: T) -
 actual fun <T, U> Observable<T>.withLatestFrom(other: ObservableSource<U>): Observable<Pair<T, U>> = withLatestFrom(other)
 
 actual fun <T, U, R> Observable<T>.withLatestFrom(other: ObservableSource<out U>, combiner: (t: T, u: U) -> R): Observable<R> = withLatestFrom(other, combiner)
+
+actual object Observables {
+    actual fun <T> create(emitter: (ObservableEmitter<T>) -> Unit) = Observable.create(emitter)
+}
+
+actual val <T> ObservableEmitter<T>.isDisposed: Boolean
+    get() = isDisposed

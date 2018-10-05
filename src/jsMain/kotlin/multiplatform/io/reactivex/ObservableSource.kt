@@ -63,10 +63,35 @@ actual fun <T, U> Observable<T>.withLatestFrom(other: ObservableSource<U>): Obse
 actual interface Observer<T> {
     actual fun onNext(t: T)
     actual fun onComplete()
+    actual fun onError(e: Throwable)
 }
 
 actual abstract class GroupedObservable<K, T> : Observable<T>()
 
 actual fun <T, U, R> Observable<T>.withLatestFrom(other: ObservableSource<out U>, combiner: (t: T, u: U) -> R): Observable<R> {
     TODO("not implemented")
+}
+
+actual interface Emitter<T> {
+    actual fun onNext(value: T)
+    actual fun onError(error: Throwable)
+    actual fun onComplete()
+}
+
+actual val <T> ObservableEmitter<T>.isDisposed: Boolean
+    get() = TODO("not implemented")
+
+actual interface ObservableEmitter<T> : Emitter<T> {
+    actual fun setDisposable(d: Disposable?)
+    //    fun setCancellable(c: Cancellable?)
+    actual fun isDisposed(): Boolean
+
+    actual fun serialize(): ObservableEmitter<T>
+    actual fun tryOnError(t: Throwable): Boolean
+}
+
+actual object Observables {
+    actual fun <T> create(emitter: (ObservableEmitter<T>) -> Unit): Observable<T> {
+        TODO("not implemented")
+    }
 }

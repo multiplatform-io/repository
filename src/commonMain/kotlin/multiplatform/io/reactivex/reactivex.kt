@@ -6,6 +6,27 @@ expect interface ObservableSource<T> {
     fun subscribe(observer: Observer<in T>)
 }
 
+expect interface Emitter<T> {
+    fun onNext(value: T)
+     fun onError(error: Throwable)
+     fun onComplete()
+}
+
+expect interface ObservableEmitter<T> : Emitter<T> {
+    fun setDisposable(d: Disposable?)
+//    fun setCancellable(c: Cancellable?)
+    fun isDisposed(): Boolean
+    fun serialize(): ObservableEmitter<T>
+    fun tryOnError(t: Throwable): Boolean
+}
+
+expect val <T> ObservableEmitter<T>.isDisposed: Boolean
+
+
+expect object Observables {
+    fun <T> create(emitter: (ObservableEmitter<T>) -> Unit): Observable<T>
+}
+
 expect abstract class Observable<T> : ObservableSource<T> {
     fun startWith(t: T): Observable<T>
     fun buffer(count: Int, skip: Int): Observable<List<T>>
@@ -36,6 +57,7 @@ expect fun <T, U, R> Observable<T>.withLatestFrom(other: ObservableSource<out U>
 expect interface Observer<T> {
     fun onNext(t: T)
     fun onComplete()
+    fun onError(e: Throwable)
 }
 
 expect abstract class GroupedObservable<K, T>: Observable<T>

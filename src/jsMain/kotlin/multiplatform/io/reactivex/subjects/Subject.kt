@@ -4,7 +4,12 @@ import multiplatform.io.reactivex.Observable
 import multiplatform.io.reactivex.Observer
 
 actual abstract class Subject<T> : Observer<T>, Observable<T>()
+
 actual class BehaviorSubject<T> : Subject<T>() {
+    override fun onError(e: Throwable) {
+        TODO("not implemented")
+    }
+
     override fun subscribe(observer: Observer<in T>) {
         TODO("not implemented")
     }
@@ -22,6 +27,10 @@ actual val <T> Subject<T>.value: T?
     get() = TODO("not implemented")
 
 actual class PublishSubject<T> : Subject<T>() {
+    override fun onError(e: Throwable) {
+        TODO("not implemented")
+    }
+
     override fun subscribe(observer: Observer<in T>) {
         TODO("not implemented")
     }
